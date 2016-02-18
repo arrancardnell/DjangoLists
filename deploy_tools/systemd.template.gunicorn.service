@@ -1,0 +1,16 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/sites/lists.scientistlearnscode.co.uk/source
+ExecStart=/home/pi/sites/lists.scientistlearnscode.co.uk/virtualenv/bin/gunicorn --bind unix:/home/pi/sites/lists.scientistlearnscode.co.uk.socket superlists.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
